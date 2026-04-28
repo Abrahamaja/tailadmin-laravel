@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  app:
+    image: USERNAME/tailadmin-laravel:beta
+    ports:
+      - "8090:8000"
