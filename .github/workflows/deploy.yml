@@ -6,31 +6,36 @@ on:
       - main
 
 env:
-  IMAGE_NAME: "${{ secrets.DOCKER_USER }}/tailadmin-laravel:beta"
+  IMAGE_NAME: "abrahamaja/tailadmin-laravel:beta"
 
 jobs:
   deploy:
     runs-on: self-hosted
 
-    steps:
-      - uses: actions/checkout@v4
+  steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Clean docker
+      - name: Debug IMAGE_NAME
+        run: echo $IMAGE_NAME
+
+      - name: Clean docker (biar gak penuh)
         run: docker system prune -a -f
 
       - name: Build image
         run: docker build -t $IMAGE_NAME .
 
-      - name: Login docker hub
+      - name: Login ke Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USER }}
+          username: abrahamaja
           password: ${{ secrets.DOCKER_PASS }}
 
       - name: Push image
         run: docker push $IMAGE_NAME
 
-      - name: Run container
-        run: |
-          docker rm -f laravel || true
-          docker run -d -p 8090:8000 --name laravel $IMAGE_NAME
+      - name: Stop container lama
+        run: docker rm -f laravel || true
+
+      - name: Run container baru
+        run: docker run -d -p 8090:8000 --name laravel $IMAGE_NAME
