@@ -12,14 +12,14 @@ jobs:
   deploy:
     runs-on: self-hosted
 
-  steps:
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Debug IMAGE_NAME
         run: echo $IMAGE_NAME
 
-      - name: Clean docker (biar gak penuh)
+      - name: Clean docker
         run: docker system prune -a -f
 
       - name: Build image
@@ -38,4 +38,4 @@ jobs:
         run: docker rm -f laravel || true
 
       - name: Run container baru
-        run: docker run -d -p 8090:8000 --name laravel $IMAGE_NAME
+        run: docker run -d -p 8090:8000 --name laravel $IMAGE_NAME1~y
