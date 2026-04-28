@@ -38,4 +38,4 @@ jobs:
         run: docker rm -f laravel || true
 
       - name: Run container baru
-        run: docker run -d -p 8090:8000 --name laravel $IMAGE_NAME1~y
+        run: docker run -d -p 8090:8000 --name laravel $IMAGE_NAME1
